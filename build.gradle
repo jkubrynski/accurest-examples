@@ -1,0 +1,41 @@
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '1.0'
+
+repositories {
+	mavenCentral()
+}
+
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'io.codearte.accurest:gradle-plugin:0.1.0'
+	}
+}
+
+apply plugin: 'accurest'
+
+accurest {
+	targetFramework = 'Spock'
+	testMode = 'MockMvc'
+	baseClassForTests = 'org.geecon.tdd.MvcSpec'
+//	generatedTestSourcesDir = 'src/accurest'
+}
+
+dependencies {
+	compile 'org.springframework:spring-webmvc:4.1.4.RELEASE'
+	compile 'javax.servlet:javax.servlet-api:3.1.0'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
+	testCompile 'com.jayway.restassured:rest-assured:2.4.0'
+	testCompile 'com.jayway.restassured:spring-mock-mvc:2.4.0'
+	testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.2.1'
+}
